@@ -9,15 +9,27 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://share-sprint-frontend.onrender.com"
+  ],
+  methods: ["GET","POST"],
+  credentials: true
+}));
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://share-sprint-frontend.onrender.com",
+    origin: [
+      "http://localhost:5173",
+      "https://share-sprint-frontend.onrender.com"
+    ],
     methods: ["GET", "POST"],
+    credentials: true
   },
+  transports: ["websocket", "polling"],
   maxHttpBufferSize: 1e8,
 });
 
@@ -122,5 +134,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at ${port}`);
 });
