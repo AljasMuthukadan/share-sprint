@@ -30,7 +30,7 @@ const io = new Server(server, {
     credentials: true
   },
   transports: ["websocket", "polling"],
-  maxHttpBufferSize: 1e8,
+  maxHttpBufferSize: 1e9,
 });
 
 const activeRooms = new Map();
